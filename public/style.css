@@ -1,0 +1,4 @@
+/* Basic styling (optional) */
+body { font-family: sans-serif; }
+input, button { padding: 10px; margin: 5px; }
+#error { color: red; margin-top: 10px; }
