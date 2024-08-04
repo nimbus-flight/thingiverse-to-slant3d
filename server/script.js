@@ -8,8 +8,11 @@ getQuoteButton.addEventListener("click", async () => {
     const thingiverseUrl = thingiverseUrlInput.value;
     const thingiverseToken = thingiverseApiTokenInput.value;
     const slant3dApiKey = slant3dApiKeyInput.value;
+    const storageBucket = storageBucketInput.value;
+
 
     if (thingiverseUrl && thingiverseToken && slant3dApiKey) {
+        resultsDiv.textContent = "Getting quotes, please wait..."; // Add a waiting message
         try {
             const response = await fetch("/get_quotes", {
                 method: "POST",
@@ -20,6 +23,7 @@ getQuoteButton.addEventListener("click", async () => {
                     thingiverseUrl,
                     thingiverseToken,
                     slant3dApiKey,
+                    storageBucket,
                 }),
             });
 

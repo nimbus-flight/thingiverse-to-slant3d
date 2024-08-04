@@ -3,6 +3,8 @@ import thingiscrape
 import requests
 import os
 from flask import render_template  # Import render_template
+from google.cloud import storage
+
 
 THINGIVERSE_TOKEN = os.environ.get('THINGIVERSE_TOKEN')
 SLANT3D_API_KEY = os.environ.get('SLANT3D_API_KEY')
@@ -12,6 +14,20 @@ app = Flask(__name__, static_folder='.', static_url_path='')
 def get_stl_file_urls(thing_id):
     thing = thingiscrape.Thing(thing_id, api_token=THINGIVERSE_TOKEN)
     return [file.url for file in thing.files if file.type == "stl"]
+
+def upload_to_gcs(file_url):
+    # Download the STL file
+    response = requests.get(file_url)
+    response.raise_for_status()
+    
+    # Generate a unique filename (you can customize this)
+    filename = f"stl_{thing_id}_{file_url.split('/')[-1]}"
+    
+    # Upload to Google Cloud Storage
+    blob = bucket.blob(filename)
+    blob.upload_from_string(response.content, content_type="model/stl")
+
+    return blob.public_url  # Return the public URL of the uploaded file
 
 
 
@@ -30,19 +46,27 @@ def get_slant3d_quote(file_url):
 
 @app.route('/get_quotes', methods=['POST'])
 def get_quotes():
+    # Google Cloud Storage setup (replace with your actual values)
     data = request.get_json()
     thing_id = data['thingiverseUrl'].split(":")[1] # Extract the thing ID
+    BUCKET_NAME = 'your-stl-bucket'  
+    BUCKET_NAME = data.get('storageBucket', BUCKET_NAME)  # Use default if not provided
+    storage_client = storage.Client()
+    bucket = storage_client.bucket(BUCKET_NAME)
+
 
     # Modify the main function to accept thing_id as a parameter
     def main(thing_id):  
         stl_file_urls = get_stl_file_urls(thing_id)
         quotes = []
         for file_url in stl_file_urls:
-            quote_data = get_slant3d_quote(file_url)
+            gcs_url = upload_to_gcs(file_url)  
+            quote_data = get_slant3d_quote(gcs_url)
+            delete_from_gcs(gcs_url)  # Delete after getting quote
             quotes.append(quote_data)
         return quotes
 
-    quotes = main(thing_id)  # Call the modified main function
+    quotes = main(thing_id, BUCKET_NAME)  # Call the modified main function
     return jsonify(quotes)
 
 @app.route('/')
