@@ -8,7 +8,7 @@ pip install flask
 pip install requirements.txt
 ```
 
-Update your api keys
+Update your api keys - Slant3D, GCP (buckets), and Thingiverse
 
 ```
 python -m flask --app main run 
