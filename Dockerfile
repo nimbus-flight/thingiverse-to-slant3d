@@ -2,9 +2,11 @@ FROM python:3.12
 
 WORKDIR /app
 
-# Install python-dotenv and other dependencies
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r ./server/requirements.txt
+# Copy requirements file from the server directory
+COPY server/requirements.txt .
+
+# Install dependencies
+RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy your application files to the container
 COPY . .
