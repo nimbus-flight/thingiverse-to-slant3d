@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 import thingiscrape
 import requests
 import os
+import json
 from flask import render_template  # Import render_template
 from google.cloud import storage
 from google.cloud import storage
