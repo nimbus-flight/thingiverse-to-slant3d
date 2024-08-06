@@ -15,7 +15,7 @@ steps:
     '--image', 
     'gcr.io/$PROJECT_ID/thingiverse-to-slant3d', 
     '--region',
-    'your-region',  
+    'us-central1',  
     '--platform',
     'managed',
     '--allow-unauthenticated',
