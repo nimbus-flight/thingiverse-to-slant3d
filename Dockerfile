@@ -12,4 +12,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # Run your Flask app, loading .env
-CMD ["python", "-m", "dotenv", "run", "-v", "--", "python", "server/main.py"] 
+CMD ["python", "server/main.py"]
