@@ -2,6 +2,7 @@ const getQuoteButton = document.getElementById("getQuoteButton");
 const thingiverseUrlInput = document.getElementById("thingiverseUrl");
 const thingiverseApiTokenInput = document.getElementById("thingiverseApiToken");
 const slant3dApiKeyInput = document.getElementById("slant3dApiKey");
+const storageBucketInput = document.getElementById("slant3dApiKey");
 const resultsDiv = document.getElementById("results");
 
 getQuoteButton.addEventListener("click", async () => {
@@ -11,7 +12,7 @@ getQuoteButton.addEventListener("click", async () => {
     const storageBucket = storageBucketInput.value;
 
 
-    if (thingiverseUrl && thingiverseToken && slant3dApiKey) {
+    if (thingiverseUrl && thingiverseToken && slant3dApiKey && storageBucket) {
         resultsDiv.textContent = "Getting quotes, please wait..."; // Add a waiting message
         try {
             const response = await fetch("/get_quotes", {

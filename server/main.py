@@ -4,10 +4,19 @@ import requests
 import os
 from flask import render_template  # Import render_template
 from google.cloud import storage
+from google.oauth2 import service_account
+from google.cloud import storage
+from dotenv import load_dotenv
 
+load_dotenv()  # Load the environment variables from .env
 
-THINGIVERSE_TOKEN = os.environ.get('THINGIVERSE_TOKEN')
-SLANT3D_API_KEY = os.environ.get('SLANT3D_API_KEY')
+THINGIVERSE_TOKEN = os.getenv("THINGIVERSE_TOKEN")
+SLANT3D_API_KEY = os.getenv("SLANT3D_API_KEY")
+GOOGLE_APPLICATION_CREDENTIALS = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
+BUCKET_NAME = os.getenv("BUCKET_NAME")
+
+storage_client = storage.Client(credentials=credentials)
+
 
 app = Flask(__name__, static_folder='.', static_url_path='') 
 
