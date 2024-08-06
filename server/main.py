@@ -8,6 +8,7 @@ from google.cloud import storage
 from google.cloud import storage
 from google.oauth2 import service_account
 from dotenv import load_dotenv
+import thingiscrape
 
 
 if os.environ.get('GAE_ENV', '').startswith('standard'):  # Check if running on Cloud Run

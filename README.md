@@ -1,6 +1,8 @@
 # thingiverse-to-slant3d
 Download Thingiverse STL, upload to google cloud storage, and retrieve quote from Slant3D
 
+Uses thingiscrape library- https://github.com/cam-cambridge/thingiscrape
+
 ## to run locally
 ```
 cd ./server/
