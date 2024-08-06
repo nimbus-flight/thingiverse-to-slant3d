@@ -9,7 +9,7 @@ pip install requirements.txt
 ```
 
 ```
-python -m flask --app main run 
+python3 -m flask --app main run 
 ```
 ## create a public google storage bucket (read and write)
 Enter your api keys to Slant3D and Thingiverse on localhost  
