@@ -15,7 +15,6 @@ storage_client = storage.Client(credentials=credentials)
 credentials = service_account.Credentials.from_service_account_file(
     os.environ['GOOGLE_APPLICATION_CREDENTIALS']
 )
-
 SLANT3D_API_KEY = os.getenv("SLANT3D_API_KEY")
 GOOGLE_APPLICATION_CREDENTIALS = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
 THINGIVERSE_TOKEN = os.getenv("THINGIVERSE_TOKEN")
