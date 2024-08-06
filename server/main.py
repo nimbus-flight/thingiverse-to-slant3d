@@ -45,16 +45,15 @@ BUCKET_NAME = os.getenv("BUCKET_NAME")
 app = Flask(__name__, static_folder='.', static_url_path='') 
 
 def get_stl_file_urls(thing_id):
-    thing = thingiscrape.Thing(thing_id, api_token=THINGIVERSE_TOKEN)
-    return [file.url for file in thing.files if file.type == "stl"]
+    return thingiscrape.get_stl_urls(thing_id, THINGIVERSE_TOKEN)
 
-def upload_to_gcs(file_url):
+def upload_to_gcs(file_url, thing_id):
     # Download the STL file
     response = requests.get(file_url)
     response.raise_for_status()
     
     # Generate a unique filename (you can customize this)
-    filename = f"stl_{thing_id}_{file_url.split('/')[-1]}"
+    filename = f"stl_{thing_id}_{file_url.split('/')[-1]}" 
     
     # Upload to Google Cloud Storage
     blob = bucket.blob(filename)
@@ -69,7 +68,7 @@ def main(thing_id):
     stl_file_urls = get_stl_file_urls(thing_id)
     quotes = []
     for file_url in stl_file_urls:
-        gcs_url = upload_to_gcs(file_url)  
+        gcs_url = upload_to_gcs(file_url, thing_id)  
         quote_data = get_slant3d_quote(gcs_url)
         delete_from_gcs(gcs_url)  # Delete after getting quote
         quotes.append(quote_data)
@@ -91,12 +90,10 @@ def get_slant3d_quote(file_url):
 
 @app.route('/get_quotes', methods=['POST'])
 def get_quotes():
-    # Google Cloud Storage setup (replace with your actual values)
     data = request.get_json()
-    thing_id = data['thingiverseUrl'].split(":")[1] # Extract the thing ID
+    thing_id = data['thingiverseId']
     quotes = main(thing_id) 
     return jsonify(quotes)
-
 
 @app.route('/')
 def index():

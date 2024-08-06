@@ -78,17 +78,26 @@ def get_stl_urls(thing_id, api_token, all_files_flag=False):
     """
 
     s = requests.Session() 
+
+    print(f"Fetching STL URLs for Thingiverse thing ID: {thing_id}")
+
     
     # Get file information for the thing
     r = s.get(thingiverse_api_base + rest_keywords["things"] + 
              thing_id + rest_keywords["files"] + access_keyword + api_token)
+    print(f"API response status code: {r.status_code}")
+
     files_info = r.json()
+    print(f"Files info: {files_info}")
 
     stl_file_urls = []
     for file_info in files_info:
+        print(f"Processing file: {file_info['name']}")  
         if all_files_flag or file_info["name"].endswith(".stl"):
             download_link = file_info["download_url"] + access_keyword + api_token
             stl_file_urls.append(download_link)
+
+    print(f"Extracted STL URLs: {stl_file_urls}")
 
     return stl_file_urls
 

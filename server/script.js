@@ -1,12 +1,12 @@
 document.addEventListener('DOMContentLoaded', (event) => {
     const getQuoteButton = document.getElementById("getQuoteButton");
-    const thingiverseUrlInput = document.getElementById("thingiverseUrl");
+    const thingiverseIdInput = document.getElementById("thingiverseId");
     const resultsDiv = document.getElementById("results");
 
     getQuoteButton.addEventListener("click", async () => {
-        const thingiverseUrl = thingiverseUrlInput.value;
+        const thingiverseId = thingiverseIdInput.value; // Get the Thing ID directly
 
-        if (thingiverseUrl) { 
+        if (thingiverseId) { 
             resultsDiv.textContent = "Getting quotes, please wait..."; 
 
             try {
@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                     headers: {
                         "Content-Type": "application/json",
                     },
-                    body: JSON.stringify({ thingiverseUrl }), 
+                    body: JSON.stringify({ thingiverseId }), 
                 });
 
                 if (response.ok) {
@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 console.error("Error details:", error);
             }
         } else {
-            resultsDiv.textContent = "Please enter a Thingiverse URL.";
+            resultsDiv.textContent = "Please enter a Thingiverse Thing ID.";
         }
     });
 });
