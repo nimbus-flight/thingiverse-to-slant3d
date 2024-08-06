@@ -5,7 +5,6 @@ import os
 from flask import render_template  # Import render_template
 from google.cloud import storage
 from google.cloud import storage
-from dotenv import load_dotenv
 from google.oauth2 import service_account
 
 credentials = service_account.Credentials.from_service_account_file(
