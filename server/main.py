@@ -8,7 +8,6 @@ from google.cloud import storage
 from google.cloud import storage
 from google.oauth2 import service_account
 from dotenv import load_dotenv
-import thingiscrape
 
 
 if os.environ.get('GAE_ENV', '').startswith('standard'):  # Check if running on Cloud Run
@@ -42,7 +41,6 @@ THINGIVERSE_CLIENT_ID = os.getenv("THINGIVERSE_CLIENT_ID")
 THINGIVERSE_CLIENT_SECRET = os.getenv("THINGIVERSE_CLIENT_SECRET")
 SLANT_API_KEY = os.getenv("SLANT_API_KEY")
 BUCKET_NAME = os.getenv("BUCKET_NAME")
-
 
 app = Flask(__name__, static_folder='.', static_url_path='') 
 
