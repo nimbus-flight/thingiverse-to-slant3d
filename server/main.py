@@ -18,6 +18,7 @@ if os.environ.get('GAE_ENV', '').startswith('standard'):  # Check if running on 
 else:
     # Local development: Load .env file
     load_dotenv()
+    print(os.environ)
     try:
         credentials = service_account.Credentials.from_service_account_file(
             os.environ['GOOGLE_APPLICATION_CREDENTIALS']
@@ -34,7 +35,7 @@ else:
 
 storage_client = storage.Client(credentials=credentials)
 
-SLANT3D_API_KEY = os.getenv("SLANT3D_API_KEY")
+SLANT3D_API_KEY = os.getenv("SLANT_API_KEY")
 GOOGLE_APPLICATION_CREDENTIALS = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
 THINGIVERSE_TOKEN = os.getenv("THINGIVERSE_TOKEN")
 THINGIVERSE_CLIENT_ID = os.getenv("THINGIVERSE_CLIENT_ID")
@@ -66,6 +67,10 @@ def upload_to_gcs(file_url):
 
     return blob.public_url  # Return the public URL of the uploaded file
 
+def delete_from_gcs(gcs_file_url):
+    blob_name = gcs_file_url.split("/")[-1]  
+    blob = bucket.blob(blob_name)
+    blob.delete()
 
 # Modify the main function to accept thing_id as a parameter
 def main(thing_id): 
