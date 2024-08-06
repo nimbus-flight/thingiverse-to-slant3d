@@ -7,10 +7,21 @@ from flask import render_template  # Import render_template
 from google.cloud import storage
 from google.cloud import storage
 from google.oauth2 import service_account
+from dotenv import load_dotenv
 
-credentials = service_account.Credentials.from_service_account_info(
-    json.loads(os.environ['GOOGLE_APPLICATION_CREDENTIALS'])
-)
+
+if os.environ.get('GAE_ENV', '').startswith('standard'):  # Check if running on Cloud Run
+    # Production: Load credentials from the environment variable set by Cloud Run secrets
+    credentials = service_account.Credentials.from_service_account_info(
+        json.loads(os.environ['GOOGLE_APPLICATION_CREDENTIALS'])
+    )
+else:
+    # Local development: Load .env file
+    load_dotenv()
+    credentials = service_account.Credentials.from_service_account_file(
+        os.environ['GOOGLE_APPLICATION_CREDENTIALS']
+    )
+
 storage_client = storage.Client(credentials=credentials)
 
 SLANT3D_API_KEY = os.getenv("SLANT3D_API_KEY")
@@ -62,14 +73,14 @@ def get_quotes():
     # Google Cloud Storage setup (replace with your actual values)
     data = request.get_json()
     thing_id = data['thingiverseUrl'].split(":")[1] # Extract the thing ID
-    BUCKET_NAME = 'your-stl-bucket'  
-    BUCKET_NAME = data.get('storageBucket', BUCKET_NAME)  # Use default if not provided
-    storage_client = storage.Client()
-    bucket = storage_client.bucket(BUCKET_NAME)
+    quotes = main(thing_id) 
+    return jsonify(quotes)
 
 
     # Modify the main function to accept thing_id as a parameter
-    def main(thing_id):  
+    def main(thing_id): 
+        global bucket
+        bucket = storage_client.bucket(BUCKET_NAME) 
         stl_file_urls = get_stl_file_urls(thing_id)
         quotes = []
         for file_url in stl_file_urls:
@@ -79,7 +90,7 @@ def get_quotes():
             quotes.append(quote_data)
         return quotes
 
-    quotes = main(thing_id, BUCKET_NAME)  # Call the modified main function
+    quotes = main(thing_id)  # Call the modified main function
     return jsonify(quotes)
 
 @app.route('/')
