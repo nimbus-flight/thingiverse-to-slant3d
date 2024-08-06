@@ -15,12 +15,12 @@ steps:
     '--image', 
     'gcr.io/$PROJECT_ID/thingiverse-to-slant3d', 
     '--region',
-    'your-region',
+    'your-region',  
     '--platform',
     'managed',
     '--allow-unauthenticated',
-    '--set-env-vars',
-    'BUCKET_NAME=nimbus-print,GOOGLE_APPLICATION_CREDENTIALS=/path/to/your/service-account-key.json'  # Update with your values
+    '--set-secrets', 
+    'GOOGLE_APPLICATION_CREDENTIALS=service-account-key:latest'  
   ]
 images:
 - 'gcr.io/$PROJECT_ID/thingiverse-to-slant3d'

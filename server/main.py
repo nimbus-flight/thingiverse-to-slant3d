@@ -7,6 +7,8 @@ from google.cloud import storage
 from google.oauth2 import service_account
 from google.cloud import storage
 from dotenv import load_dotenv
+from google.oauth2 import service_account
+
 
 load_dotenv()  # Load the environment variables from .env
 
@@ -16,7 +18,9 @@ GOOGLE_APPLICATION_CREDENTIALS = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
 BUCKET_NAME = os.getenv("BUCKET_NAME")
 
 storage_client = storage.Client(credentials=credentials)
-
+credentials = service_account.Credentials.from_service_account_file(
+    os.environ['GOOGLE_APPLICATION_CREDENTIALS']
+)
 
 app = Flask(__name__, static_folder='.', static_url_path='') 
 
