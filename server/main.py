@@ -6,7 +6,6 @@ from flask import render_template  # Import render_template
 from google.cloud import storage
 from google.oauth2 import service_account
 from google.cloud import storage
-from dotenv import load_dotenv
 from google.oauth2 import service_account
 from google.cloud import storage
 
