@@ -18,9 +18,19 @@ if os.environ.get('GAE_ENV', '').startswith('standard'):  # Check if running on 
 else:
     # Local development: Load .env file
     load_dotenv()
-    credentials = service_account.Credentials.from_service_account_file(
-        os.environ['GOOGLE_APPLICATION_CREDENTIALS']
-    )
+    try:
+        credentials = service_account.Credentials.from_service_account_file(
+            os.environ['GOOGLE_APPLICATION_CREDENTIALS']
+        )
+    except FileNotFoundError:
+        # If the file is not found, try loading directly from the environment variable
+        try:
+            credentials = service_account.Credentials.from_service_account_info(
+                json.loads(os.environ['GOOGLE_APPLICATION_CREDENTIALS'])
+            )
+        except (KeyError, json.JSONDecodeError):
+            print("Error: GOOGLE_APPLICATION_CREDENTIALS is not set or invalid.")
+            # Handle the error appropriately (e.g., exit the program or skip GCS initialization)
 
 storage_client = storage.Client(credentials=credentials)
 
