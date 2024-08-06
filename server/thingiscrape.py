@@ -64,6 +64,37 @@ def save_data():
             continue
     file.close()
 
+def get_first_image_url(thing_id, api_token):
+    """
+    Retrieves the URL of the first image associated with a Thingiverse thing.
+
+    Args:
+        thing_id: The ID of the Thingiverse thing.
+        api_token: Your Thingiverse API token.
+
+    Returns:
+        The URL of the first image, or None if no image is found.
+    """
+
+    s = requests.Session()
+
+    # Get thing information (including images)
+    r = s.get(thingiverse_api_base + rest_keywords["things"] + 
+             thing_id + access_keyword + api_token)
+
+    if r.status_code != 200:
+        print(f"Error fetching thing information: {r.status_code}")
+        return None
+
+    thing_info = r.json()
+
+    # Check if there are images
+    if 'images' in thing_info and len(thing_info['images']) > 0:
+        return thing_info['images'][0]['sizes']['large']  # Assuming 'large' is the desired size
+    else:
+        return None 
+
+
 def get_stl_urls(thing_id, api_token, all_files_flag=False):
     """
     Retrieves the URLs of STL files associated with a Thingiverse thing.
