@@ -8,19 +8,25 @@ from google.oauth2 import service_account
 from google.cloud import storage
 from dotenv import load_dotenv
 from google.oauth2 import service_account
+from google.cloud import storage
 
 
-load_dotenv()  # Load the environment variables from .env
 
-THINGIVERSE_TOKEN = os.getenv("THINGIVERSE_TOKEN")
-SLANT3D_API_KEY = os.getenv("SLANT3D_API_KEY")
-GOOGLE_APPLICATION_CREDENTIALS = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
-BUCKET_NAME = os.getenv("BUCKET_NAME")
 
 storage_client = storage.Client(credentials=credentials)
 credentials = service_account.Credentials.from_service_account_file(
     os.environ['GOOGLE_APPLICATION_CREDENTIALS']
 )
+
+
+SLANT3D_API_KEY = os.getenv("SLANT3D_API_KEY")
+GOOGLE_APPLICATION_CREDENTIALS = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
+THINGIVERSE_TOKEN = os.getenv("THINGIVERSE_TOKEN")
+THINGIVERSE_CLIENT_ID = os.getenv("THINGIVERSE_CLIENT_ID")
+THINGIVERSE_CLIENT_SECRET = os.getenv("THINGIVERSE_CLIENT_SECRET")
+SLANT_API_KEY = os.getenv("SLANT_API_KEY")
+BUCKET_NAME = os.getenv("BUCKET_NAME")
+
 
 app = Flask(__name__, static_folder='.', static_url_path='') 
 
