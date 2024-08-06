@@ -47,19 +47,25 @@ app = Flask(__name__, static_folder='.', static_url_path='')
 def get_stl_file_urls(thing_id):
     return thingiscrape.get_stl_urls(thing_id, THINGIVERSE_TOKEN)
 
-def upload_to_gcs(file_url, thing_id):
+def upload_to_gcs(file_url):
     # Download the STL file
     response = requests.get(file_url)
     response.raise_for_status()
-    
-    # Generate a unique filename (you can customize this)
-    filename = f"stl_{thing_id}_{file_url.split('/')[-1]}" 
-    
+
+    # Extract the filename from the query parameters
+    filename = requests.utils.unquote(response.url.split("filename=")[-1]) 
+
+    # Further process the filename to get only the last part (after the last '/')
+    final_filename = filename.split('/')[-1]
+    print(final_filename)
     # Upload to Google Cloud Storage
-    blob = bucket.blob(filename)
+    blob = bucket.blob(final_filename)
     blob.upload_from_string(response.content, content_type="model/stl")
+    
+    print(blob.public_url)
 
     return blob.public_url  # Return the public URL of the uploaded file
+
 
 # Modify the main function to accept thing_id as a parameter
 def main(thing_id): 
@@ -68,7 +74,8 @@ def main(thing_id):
     stl_file_urls = get_stl_file_urls(thing_id)
     quotes = []
     for file_url in stl_file_urls:
-        gcs_url = upload_to_gcs(file_url, thing_id)  
+        gcs_url = upload_to_gcs(file_url)  
+        print(gcs_url)
         quote_data = get_slant3d_quote(gcs_url)
         delete_from_gcs(gcs_url)  # Delete after getting quote
         quotes.append(quote_data)

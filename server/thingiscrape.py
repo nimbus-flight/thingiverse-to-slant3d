@@ -74,14 +74,13 @@ def get_stl_urls(thing_id, api_token, all_files_flag=False):
         all_files_flag: If True, returns URLs for all files, not just STL files.
 
     Returns:
-        A list of STL file URLs.
+        A list of STL file URLs, including the original filenames.
     """
 
     s = requests.Session() 
 
     print(f"Fetching STL URLs for Thingiverse thing ID: {thing_id}")
 
-    
     # Get file information for the thing
     r = s.get(thingiverse_api_base + rest_keywords["things"] + 
              thing_id + rest_keywords["files"] + access_keyword + api_token)
@@ -92,14 +91,17 @@ def get_stl_urls(thing_id, api_token, all_files_flag=False):
 
     stl_file_urls = []
     for file_info in files_info:
-        print(f"Processing file: {file_info['name']}")  
+        print(f"Processing file: {file_info['name']}")
         if all_files_flag or file_info["name"].endswith(".stl"):
             download_link = file_info["download_url"] + access_keyword + api_token
-            stl_file_urls.append(download_link)
+            # Include the original filename in the download link
+            download_link_with_filename = f"{download_link}&filename={file_info['name']}"
+            stl_file_urls.append(download_link_with_filename)
 
     print(f"Extracted STL URLs: {stl_file_urls}")
 
     return stl_file_urls
+
 
 def generic_search(term=None, sort_type=None, license=None, n_pages=1):
     for idx in range(n_pages):
