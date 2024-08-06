@@ -7,8 +7,8 @@ from google.cloud import storage
 from google.cloud import storage
 from google.oauth2 import service_account
 
-credentials = service_account.Credentials.from_service_account_file(
-    os.environ['GOOGLE_APPLICATION_CREDENTIALS']
+credentials = service_account.Credentials.from_service_account_info(
+    json.loads(os.environ['GOOGLE_APPLICATION_CREDENTIALS'])
 )
 storage_client = storage.Client(credentials=credentials)
 
