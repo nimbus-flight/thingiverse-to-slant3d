@@ -12,9 +12,14 @@ pip install requirements.txt
 python -m flask --app main run 
 ```
 
-Pass your api keys - Slant3D and Thingiverse in on localhost
+Enter your api keys to Slant3D and Thingiverse on localhost
+Copy a thingiverse url 
+Retrieve Quote
 
 # to deploy to Google Cloud Run and Cloud Build
 update cloudbuild.yaml and create a cloud run and cloud build app
+
+## sample application running here
+plan3dprint.com/get-quotes
 
 
