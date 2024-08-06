@@ -88,7 +88,7 @@ def get_stl_urls(thing_id, api_token, all_files_flag=False):
 
     files_info = r.json()
     print(f"Files info: {files_info}")
-        if 'error' in files_info:
+    if 'error' in files_info:
         print(f"Error from Thingiverse API: {files_info['error']}")
         return []  # Or handle the error differently
 
