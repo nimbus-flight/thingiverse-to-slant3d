@@ -20,6 +20,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
                 if (response.ok) {
                     const data = await response.json();
+                    console.log(data);
                     resultsDiv.textContent = JSON.stringify(data, null, 2); 
                 } else {
                     throw new Error("Failed to get quotes from the server");

@@ -18,7 +18,6 @@ if os.environ.get('GAE_ENV', '').startswith('standard'):  # Check if running on 
 else:
     # Local development: Load .env file
     load_dotenv()
-    print(os.environ)
     try:
         credentials = service_account.Credentials.from_service_account_file(
             os.environ['GOOGLE_APPLICATION_CREDENTIALS']
