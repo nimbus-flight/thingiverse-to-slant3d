@@ -11,8 +11,8 @@ steps:
 - name: 'gcr.io/cloud-builders/docker'
   args: ['push', 'gcr.io/$PROJECT_ID/thingiverse-to-slant3d']
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk:latest'
+  entrypoint: gcloud
   args: [
-    '/google-cloud-sdk/bin/gcloud', # Specify the full path to gcloud 
     'run', 
     'deploy', 
     'thingiverse-to-slant3d', 
