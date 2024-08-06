@@ -63,6 +63,18 @@ def upload_to_gcs(file_url):
 
     return blob.public_url  # Return the public URL of the uploaded file
 
+# Modify the main function to accept thing_id as a parameter
+def main(thing_id): 
+    global bucket
+    bucket = storage_client.bucket(BUCKET_NAME) 
+    stl_file_urls = get_stl_file_urls(thing_id)
+    quotes = []
+    for file_url in stl_file_urls:
+        gcs_url = upload_to_gcs(file_url)  
+        quote_data = get_slant3d_quote(gcs_url)
+        delete_from_gcs(gcs_url)  # Delete after getting quote
+        quotes.append(quote_data)
+    return quotes
 
 
 def get_slant3d_quote(file_url):
@@ -86,22 +98,6 @@ def get_quotes():
     quotes = main(thing_id) 
     return jsonify(quotes)
 
-
-    # Modify the main function to accept thing_id as a parameter
-    def main(thing_id): 
-        global bucket
-        bucket = storage_client.bucket(BUCKET_NAME) 
-        stl_file_urls = get_stl_file_urls(thing_id)
-        quotes = []
-        for file_url in stl_file_urls:
-            gcs_url = upload_to_gcs(file_url)  
-            quote_data = get_slant3d_quote(gcs_url)
-            delete_from_gcs(gcs_url)  # Delete after getting quote
-            quotes.append(quote_data)
-        return quotes
-
-    quotes = main(thing_id)  # Call the modified main function
-    return jsonify(quotes)
 
 @app.route('/')
 def index():
