@@ -15,6 +15,17 @@ if os.environ.get('GAE_ENV', '').startswith('standard'):  # Check if running on 
     credentials = service_account.Credentials.from_service_account_info(
         json.loads(os.environ['GOOGLE_APPLICATION_CREDENTIALS'])
     )
+
+    # Access other environment variables from the secret
+    secret_client = secretmanager.SecretManagerServiceClient()
+    secret_name = "projects/{}/secrets/{}/versions/latest".format(os.environ['PROJECT_ID'], 'thingiverse-slant3d-env')
+    response = secret_client.access_secret_version(request={"name": secret_name})
+    secret_payload = response.payload.data.decode("UTF-8")
+    
+    # Parse the secret payload and extract environment variables
+    for line in secret_payload.splitlines():
+        key, value = line.split('=', 1)
+        os.environ[key] = value
 else:
     # Local development: Load .env file
     load_dotenv()
