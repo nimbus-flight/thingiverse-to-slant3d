@@ -119,6 +119,15 @@ def get_quotes():
     quotes = main(thing_id) 
     return jsonify(quotes)
 
+@app.route('/get_thing_image', methods=['POST'])
+def get_thing_image():
+    data = request.get_json()
+    thing_id = data['thingiverseId']
+
+    image_url = thingiscrape.get_first_image_url(thing_id, THINGIVERSE_TOKEN)
+    return jsonify({'imageUrl': image_url})
+
+
 @app.route('/')
 def index():
     return render_template('index.html')  # Render the index.html file

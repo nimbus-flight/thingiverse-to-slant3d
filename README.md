@@ -6,7 +6,6 @@ Uses thingiscrape library- https://github.com/cam-cambridge/thingiscrape
 ## to run locally
 ```
 cd ./server/
-pip install flask
 pip install requirements.txt
 ```
 

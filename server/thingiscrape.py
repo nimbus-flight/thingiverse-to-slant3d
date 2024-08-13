@@ -87,12 +87,14 @@ def get_first_image_url(thing_id, api_token):
         return None
 
     thing_info = r.json()
+    print(thing_info)
 
-    # Check if there are images
-    if 'images' in thing_info and len(thing_info['images']) > 0:
-        return thing_info['images'][0]['sizes']['large']  # Assuming 'large' is the desired size
+    # Directly return the 'preview_image' URL if it exists
+    if 'preview_image' in thing_info:
+        print(thing_info)
+        return thing_info['preview_image']
     else:
-        return None 
+        return None
 
 
 def get_stl_urls(thing_id, api_token, all_files_flag=False):
