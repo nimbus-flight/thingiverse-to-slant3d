@@ -3,10 +3,21 @@ document.addEventListener("DOMContentLoaded", (event) => {
   const thingiverseIdInput = document.getElementById("thingiverseId");
   const resultsDiv = document.getElementById("results");
 
+  // Create an object to track if a quote has been requested for specific Thingiverse IDs
+  const requestedQuotes = {};
+
   getQuoteButton.addEventListener("click", async () => {
     const thingiverseId = thingiverseIdInput.value;
 
+    // Check if a quote has already been requested for this specific Thingiverse ID
+    if (requestedQuotes[thingiverseId]) {
+      resultsDiv.textContent += `\nA quote has already been requested for Thingiverse ID ${thingiverseId}. Please enter a new ID or refresh the page to request again.`;
+      return;
+    }
+
     if (thingiverseId) {
+      // Disable the button to prevent multiple clicks
+      getQuoteButton.disabled = true;
       resultsDiv.textContent = "Fetching Thingiverse details...\n";
 
       try {
@@ -19,10 +30,10 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
         if (imageResponse.ok) {
           const imageData = await imageResponse.json();
-          console.log("Image URL received:", imageData.imageUrl); // Log the received URL
+          console.log("Image URL received:", imageData.imageUrl);
 
           if (imageData.imageUrl) {
-            displayImage(imageData.imageUrl); // Call the function if a URL is received
+            displayImage(imageData.imageUrl);
           } else {
             console.log("No image URL received.");
           }
@@ -38,6 +49,9 @@ document.addEventListener("DOMContentLoaded", (event) => {
           if (quoteResponse.ok) {
             const quoteData = await quoteResponse.json();
             displayQuotes(quoteData);
+
+            // Mark the Thingiverse ID as having been requested
+            requestedQuotes[thingiverseId] = true;
           } else {
             throw new Error("Failed to get quotes from the server");
           }
@@ -47,6 +61,9 @@ document.addEventListener("DOMContentLoaded", (event) => {
       } catch (error) {
         resultsDiv.textContent = `Error: ${error.message}`;
         console.error("Error details:", error);
+      } finally {
+        // Re-enable the button after the operation is complete
+        getQuoteButton.disabled = false;
       }
     } else {
       resultsDiv.textContent = "Please enter a Thingiverse Thing ID.";
@@ -71,9 +88,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
         console.log("No image URL provided.");
         document.getElementById('results').textContent += "\nNo image found for this Thing.";
     }
-}
+  }
 
-  // Function to display quotes (adjust as needed)
   function displayQuotes(quoteData) {
     resultsDiv.textContent += "\nQuotes:\n";
     resultsDiv.textContent += JSON.stringify(quoteData, null, 2);
