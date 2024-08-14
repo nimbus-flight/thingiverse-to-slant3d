@@ -29,12 +29,12 @@ Copy a thingiverse url
 Retrieve Quote  
 
 ## to deploy to Google Cloud Run and Cloud Build
-update cloudbuild.yaml and create a cloud run and cloud build app
+update cloudbuild.yaml and create a cloud run and cloud build app  
 couldn't get working on cloudbuild- you are welcome to try
 
 ## Deploying to Vercel
-Set the framework preset to "Other."
-Set the root directory to ./.
+Set the framework preset to "Other."  
+Set the root directory to ./.  
 Add your environment variables in Vercel, including the base64 encoded Google Application Credentials.
 
 ## sample application running here
