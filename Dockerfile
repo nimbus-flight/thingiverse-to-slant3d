@@ -12,4 +12,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # Run your Flask app with Waitress
-CMD ["waitress-serve", "--port=8080", "server.main:app"]
+CMD ["python", "server/main.py"]
