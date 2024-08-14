@@ -1,12 +1,15 @@
 # thingiverse-to-slant3d
 Download Thingiverse STL, upload to google cloud storage, and retrieve quote from Slant3D
 
-Uses thingiscrape library- https://github.com/cam-cambridge/thingiscrape
+![image](https://github.com/user-attachments/assets/2a36eeab-0a53-48cd-984a-538602ff69da)
+
+
+Uses [thingiscrape library](https://github.com/cam-cambridge/thingiscrape)
 
 ## to run locally
 ```
 cd ./server/
-pip install requirements.txt
+python3 - m pip install -r requirements.txt
 ```
 
 ## create a public google storage bucket (read and write)
@@ -27,6 +30,12 @@ Retrieve Quote
 
 ## to deploy to Google Cloud Run and Cloud Build
 update cloudbuild.yaml and create a cloud run and cloud build app
+couldn't get working on cloudbuild- you are welcome to try
+
+## Deploying to Vercel
+Set the framework preset to "Other."
+Set the root directory to ./.
+Add your environment variables in Vercel, including the base64 encoded Google Application Credentials.
 
 ## sample application running here
 plan3dprint.com/get-quotes
