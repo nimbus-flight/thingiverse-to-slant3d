@@ -38,6 +38,6 @@ Set the root directory to ./.
 Add your environment variables in Vercel, including the base64 encoded Google Application Credentials.
 
 ## sample application running here
-plan3dprint.com/get-quotes
+[plan3dprint.com/get-quotes](https://thingiverse-to-slant3d-n5eslum38-nimbus-prints-projects.vercel.app/)
 
 
