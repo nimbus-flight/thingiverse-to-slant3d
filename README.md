@@ -40,4 +40,6 @@ Add your environment variables in Vercel, including the base64 encoded Google Ap
 ## sample application running here
 [plan3dprint.com/get-quotes](https://thingiverse-to-slant3d-n5eslum38-nimbus-prints-projects.vercel.app/)
 
+## to support the project
+buy a 3d print from plan3Dprint.com!
 
