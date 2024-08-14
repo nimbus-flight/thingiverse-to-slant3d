@@ -55,14 +55,6 @@ THINGIVERSE_CLIENT_SECRET = os.getenv("THINGIVERSE_CLIENT_SECRET")
 SLANT_API_KEY = os.getenv("SLANT_API_KEY")
 BUCKET_NAME = os.getenv("BUCKET_NAME")
 
-print(f"GOOGLE_APPLICATION_CREDENTIALS: {GOOGLE_APPLICATION_CREDENTIALS}")
-print(f"THINGIVERSE_TOKEN: {THINGIVERSE_TOKEN}")
-print(f"THINGIVERSE_CLIENT_ID: {THINGIVERSE_CLIENT_ID}")
-print(f"THINGIVERSE_CLIENT_SECRET: {THINGIVERSE_CLIENT_SECRET}")
-print(f"SLANT_API_KEY: {SLANT_API_KEY}")
-print(f"BUCKET_NAME: {BUCKET_NAME}")
-
-
 app = Flask(__name__, static_folder='.', static_url_path='') 
 
 def get_stl_file_urls(thing_id):
@@ -131,9 +123,16 @@ def get_quotes():
 def get_thing_image():
     data = request.get_json()
     thing_id = data['thingiverseId']
-
+    
+    print(f"Received request for Thingiverse ID: {thing_id}")
+    
     image_url = thingiscrape.get_first_image_url(thing_id, THINGIVERSE_TOKEN)
-    print(f"Image URL returned: {image_url}")
+    
+    if image_url:
+        print(f"Image URL retrieved: {image_url}")
+    else:
+        print("Failed to retrieve image URL, received null")
+    
     return jsonify({'imageUrl': image_url})
 
 

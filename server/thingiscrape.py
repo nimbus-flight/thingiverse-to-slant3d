@@ -75,6 +75,7 @@ def get_first_image_url(thing_id, api_token):
     Returns:
         The URL of the first image, or None if no image is found.
     """
+    print(f"Requesting image for Thingiverse ID: {thing_id} with token: {api_token}")
 
     s = requests.Session()
 
@@ -87,7 +88,7 @@ def get_first_image_url(thing_id, api_token):
         return None
 
     thing_info = r.json()
-    #print("Thing Info:", json.dumps(thing_info, indent=2))  # Debug print
+    print("Thing Info:", json.dumps(thing_info, indent=2))  # Debug print
 
     # Look for the 'default_image' and return the largest available thumbnail
     if 'default_image' in thing_info:
