@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
     const thingiverseId = thingiverseIdInput.value;
 
     if (thingiverseId) {
-      resultsDiv.textContent = "Fetching Thingiverse details...";
+      resultsDiv.textContent = "Fetching Thingiverse details...\n";
 
       try {
         // 1. Fetch Thingiverse Image URL
@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
           }
 
           // 2. Fetch Quotes (after displaying the image)
-          resultsDiv.textContent += "\nGetting quotes, please wait...";
+          resultsDiv.textContent += "Getting quotes, please wait...\n";
           const quoteResponse = await fetch("/get_quotes", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
