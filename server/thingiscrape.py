@@ -5,7 +5,8 @@ import argparse
 import os.path
 from collections import OrderedDict
 
-downloads_path = "./downloads"
+downloads_path = '/tmp/downloads'
+os.makedirs(downloads_path, exist_ok=True)
 stl_path = os.path.join(downloads_path, "stls")
 json_path = os.path.join(downloads_path, "json")
 
