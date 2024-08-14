@@ -141,4 +141,5 @@ def index():
     return render_template('index.html')  # Render the index.html file
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 8080)), debug=True)
+    from waitress import serve
+    serve(app, host='0.0.0.0', port=8080)
