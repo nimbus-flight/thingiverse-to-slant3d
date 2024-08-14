@@ -3,6 +3,7 @@ from server import thingiscrape
 import requests
 import os
 import json
+import base64
 from flask import render_template
 from google.cloud import storage
 from google.oauth2 import service_account
