@@ -47,5 +47,5 @@ integrate stl and other features into site so you can for example see the stl pr
 add support for other 3d repos such as printables and thangs  
 
 ## to support the project
-buy a 3d print from plan3Dprint.com!
+buy a 3d print from [plan3Dprint.com](https://plan3dprint.com/)!
 
