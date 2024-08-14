@@ -12,9 +12,8 @@ from google.cloud import secretmanager
 
 # Decode and write the service account key (useful for Vercel deployment)
 if 'GOOGLE_APPLICATION_CREDENTIALS_BASE64' in os.environ:
-    with open('service-account-key.json', 'w') as f:
-        f.write(base64.b64decode(os.environ['GOOGLE_APPLICATION_CREDENTIALS_BASE64']).decode('utf-8'))
-    credentials = service_account.Credentials.from_service_account_file('service-account-key.json')
+    credentials_info = json.loads(base64.b64decode(os.environ['GOOGLE_APPLICATION_CREDENTIALS_BASE64']).decode('utf-8'))
+    credentials = service_account.Credentials.from_service_account_info(credentials_info)
 else:
     if os.environ.get('GAE_ENV', '').startswith('standard'):  # Check if running on Cloud Run
         # Production: Load credentials from the environment variable set by Cloud Run secrets
