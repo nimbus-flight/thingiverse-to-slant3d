@@ -87,15 +87,24 @@ def get_first_image_url(thing_id, api_token):
         return None
 
     thing_info = r.json()
-    print(thing_info)
+    #print("Thing Info:", json.dumps(thing_info, indent=2))  # Debug print
 
-    # Directly return the 'preview_image' URL if it exists
-    if 'preview_image' in thing_info:
-        print(thing_info)
-        return thing_info['preview_image']
+    # Look for the 'default_image' and return the largest available thumbnail
+    if 'default_image' in thing_info:
+        default_image = thing_info['default_image']
+        if 'sizes' in default_image:
+            for size in default_image['sizes']:
+                if size['type'] == 'thumb' and size['size'] == 'large':
+                    return size['url']
+        # If no large thumbnail is found, return the first available size
+        return default_image['sizes'][0]['url'] if default_image['sizes'] else None
     else:
+            # Fallback: Try using the generic 'thumbnail' field
+        if 'thumbnail' in thing_info:
+            return thing_info['thumbnail']
+        
+        print("No default image or thumbnail found, returning None.")
         return None
-
 
 def get_stl_urls(thing_id, api_token, all_files_flag=False):
     """

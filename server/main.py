@@ -125,6 +125,7 @@ def get_thing_image():
     thing_id = data['thingiverseId']
 
     image_url = thingiscrape.get_first_image_url(thing_id, THINGIVERSE_TOKEN)
+    print(f"Image URL returned: {image_url}")
     return jsonify({'imageUrl': image_url})
 
 

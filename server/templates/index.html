@@ -2,7 +2,15 @@
 <html>
 <head>
     <title>Thingiverse Quote Request</title>
-    <script src="script.js" defer></script> 
+    <style>
+        #results {
+            margin-top: 20px;
+        }
+        iframe {
+            max-width: 100%;
+            max-height: 100%;
+        }
+    </style>
 </head>
 <body>
     <div>
@@ -12,5 +20,8 @@
     
     <button type="button" id="getQuoteButton">Get Quotes</button>
     <div id="results"></div>
+    <div id="imageContainer"></div> <!-- Separate div for the image -->
+
 </body>
+<script src="script.js" defer></script> 
 </html>

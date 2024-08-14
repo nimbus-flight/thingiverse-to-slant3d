@@ -19,7 +19,13 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
         if (imageResponse.ok) {
           const imageData = await imageResponse.json();
-          displayImage(imageData.imageUrl);
+          console.log("Image URL received:", imageData.imageUrl); // Log the received URL
+
+          if (imageData.imageUrl) {
+            displayImage(imageData.imageUrl); // Call the function if a URL is received
+          } else {
+            console.log("No image URL received.");
+          }
 
           // 2. Fetch Quotes (after displaying the image)
           resultsDiv.textContent += "\nGetting quotes, please wait...";
@@ -47,18 +53,25 @@ document.addEventListener("DOMContentLoaded", (event) => {
     }
   });
 
-  // Function to display the image
   function displayImage(imageUrl) {
+    console.log("displayImage function called.");
     if (imageUrl) {
-      const img = document.createElement("img");
-      img.src = imageUrl;
-      img.alt = "Thingiverse Image";
-      img.width = 300;
-      resultsDiv.appendChild(img);
+        console.log("Appending image with URL:", imageUrl);
+        const img = document.createElement("img");
+        img.src = imageUrl;
+        img.alt = "Thingiverse Image";
+        img.style.maxWidth = "400px";
+        img.style.maxHeight = "400px";
+        img.style.width = "auto"; // Maintain aspect ratio
+        img.style.height = "auto"; // Maintain aspect ratio
+        img.style.border = "2px solid red"; // Optional: Add a border for visibility
+        document.getElementById('imageContainer').appendChild(img);
+        console.log("Image appended successfully.");
     } else {
-      resultsDiv.textContent += "\nNo image found for this Thing.";
+        console.log("No image URL provided.");
+        document.getElementById('results').textContent += "\nNo image found for this Thing.";
     }
-  }
+}
 
   // Function to display quotes (adjust as needed)
   function displayQuotes(quoteData) {
