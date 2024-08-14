@@ -40,6 +40,12 @@ Add your environment variables in Vercel, including the base64 encoded Google Ap
 ## sample application running here
 [plan3dprint.com/get-quotes](https://thingiverse-to-slant3d-n5eslum38-nimbus-prints-projects.vercel.app/)
 
+## future improvements
+currently only supports stl, need to add support 3mf and other file types if Slant3D API works with them  
+display upload progress for google cloud storage  
+integrate stl and other features into site so you can for example see the stl print dimensions in mm  
+add support for other 3d repos such as printables and thangs  
+
 ## to support the project
 buy a 3d print from plan3Dprint.com!
 
