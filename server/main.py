@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-import thingiscrape
+from server import thingiscrape
 import requests
 import os
 import json
